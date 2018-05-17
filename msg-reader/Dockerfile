@@ -1,4 +1,4 @@
-FROM reg.qiniu.com/diablowu/centos-java-maven as builder
+FROM reg.qiniu.com/diablowu-pub/centos-java-maven as builder
 
 WORKDIR /app
 
