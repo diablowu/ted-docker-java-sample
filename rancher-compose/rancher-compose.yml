@@ -1,0 +1,26 @@
+version: '2'
+services:
+  reader:
+    scale: 1
+    start_on_create: true
+  writer:
+    scale: 1
+    start_on_create: true
+  redis:
+    scale: 1
+    start_on_create: true
+  lb:
+    scale: 1
+    start_on_create: true
+    lb_config:
+      port_rules:
+      - hostname: reader.app.uat.tkpdevops.com
+        protocol: http
+        service: reader
+        source_port: 80
+        target_port: 8080
+      - hostname: writer.app.uat.tkpdevops.com
+        protocol: http
+        service: writer
+        source_port: 80
+        target_port: 8080

@@ -31,7 +31,7 @@ class ReaderControll {
 	public ResponseEntity<String> get(@PathVariable(name="ch") String ch){
 		String r = redis.opsForList().leftPop(ch);
 		if(StringUtils.hasText(r)){
-			return ResponseEntity.ok(r);
+			return ResponseEntity.ok("msg:{"+r +"},reader:"+System.getenv("HOSTNAME"));
 		}else{
 			return ResponseEntity.notFound().build();
 		}

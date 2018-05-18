@@ -1,0 +1,31 @@
+version: '2'
+services:
+  reader:
+    image: daocloud.io/wubo19842008/msg-reader
+    environment:
+      SPRING_REDIS_HOST: redis
+    links:
+    - redis:redis
+    labels:
+      io.rancher.container.pull_image: always
+  writer:
+    image: daocloud.io/wubo19842008/msg-writer
+    environment:
+      SPRING_REDIS_HOST: redis
+    links:
+    - redis:redis
+    labels:
+      io.rancher.container.pull_image: always
+  redis:
+    image: redis:3
+    labels:
+      io.rancher.container.pull_image: always
+  lb:
+    image: rancher/lb-service-haproxy:v0.9.1
+    ports:
+    - 80:80/tcp
+    labels:
+      io.rancher.scheduler.affinity:host_label: io.tkp.lb=true
+      io.rancher.container.agent.role: environmentAdmin,agent
+      io.rancher.container.agent_service.drain_provider: 'true'
+      io.rancher.container.create_agent: 'true'

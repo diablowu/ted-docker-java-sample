@@ -27,7 +27,7 @@ class WriterControll {
 
 	@RequestMapping("/{ch}/msg")
 	public ResponseEntity<String> get(@PathVariable(name = "ch") String ch,String msg) {
-		long len = redis.opsForList().rightPush(ch,msg + "@" + LocalDateTime.now().toString());
+		long len = redis.opsForList().rightPush(ch,"msg:" + msg + ",ts:" + LocalDateTime.now().toString()+",writer:"+System.getenv("HOSTNAME"));
 		return ResponseEntity.ok(String.valueOf(len));
 
 	}
