@@ -1,7 +1,5 @@
 package ted.docker.demo.writer;
 
-import java.time.LocalDateTime;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -27,7 +25,8 @@ class WriterControll {
 
 	@RequestMapping("/{ch}/msg")
 	public ResponseEntity<String> get(@PathVariable(name = "ch") String ch,String msg) {
-		long len = redis.opsForList().rightPush(ch,"msg:" + msg + ",ts:" + LocalDateTime.now().toString()+",writer:"+System.getenv("HOSTNAME"));
+		long len = redis.opsForList().rightPush(ch,
+		"msg:" + msg + ",ts:" + System.currentTimeMillis()+",writer:"+System.getenv("HOSTNAME"));
 		return ResponseEntity.ok(String.valueOf(len));
 
 	}
